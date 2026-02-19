@@ -13,9 +13,13 @@ export async function middleware(request: NextRequest) {
         '/forgot-password',
         '/api/auth/forgot-password',
         '/api/auth/reset-password',
+        '/api/auth/reset-password',
         '/_next',
-        '/static'
-    ].some(p => path.startsWith(p));
+        '/static',
+        '/',
+        '/about',
+        '/research'
+    ].some(p => path === p || path.startsWith(p + '/'));
 
     const sessionCookie = request.cookies.get('session')?.value;
     const session = sessionCookie ? await decryptSession(sessionCookie) : null;

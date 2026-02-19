@@ -7,12 +7,16 @@ import Container from '@/components/ui/Container';
 import Input from '@/components/ui/Input';
 import styles from './Login.module.css';
 
+import { useAuth } from '@/context/AuthContext';
+
 export default function LoginPage() {
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+    const { refreshUser } = useAuth();
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -31,6 +35,9 @@ export default function LoginPage() {
             if (!res.ok) {
                 throw new Error(data.error || 'Authentication failed');
             }
+
+            // Refresh auth state before redirecting
+            await refreshUser();
 
             // Redirect to role-specific dashboard
             router.push(data.redirectUrl);
@@ -105,7 +112,9 @@ export default function LoginPage() {
 
                     <div className={styles.footer}>
                         <p style={{ fontSize: '0.75rem', color: '#999' }}>Restricted to authorized personnel only.</p>
-                        <p style={{ marginTop: '0.25rem', fontSize: '0.75rem', color: '#999' }}>Secure Session ID: {Date.now().toString(36)}</p>
+                        <p style={{ marginTop: '0.25rem', fontSize: '0.75rem', color: '#999' }}>
+                            Contact at : <a href="mailto:smartasdplatform@gmail.com" style={{ color: 'inherit', textDecoration: 'none' }}>smartasdplatform@gmail.com</a>
+                        </p>
                     </div>
 
                 </div>

@@ -27,6 +27,17 @@ export default function RegisterPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
+    // Password validation logic
+    const passwordRules = [
+        { label: 'At least 8 characters', valid: password.length >= 8 },
+        { label: 'Contains uppercase letter', valid: /[A-Z]/.test(password) },
+        { label: 'Contains lowercase letter', valid: /[a-z]/.test(password) },
+        { label: 'Contains number', valid: /[0-9]/.test(password) },
+        { label: 'Contains special character', valid: /[^A-Za-z0-9]/.test(password) },
+    ];
+
+    const isPasswordValid = passwordRules.every(rule => rule.valid);
+
     const handleRoleSelect = (role: Role) => {
         setSelectedRole(role);
         setStep('FORM');
@@ -184,6 +195,25 @@ export default function RegisterPage() {
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
                                     disabled={isLoading}
+                                    tooltip={
+                                        <div>
+                                            <p style={{ marginBottom: '0.25rem', fontWeight: 'bold' }}>Password Requirements:</p>
+                                            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                                                {passwordRules.map((rule, idx) => (
+                                                    <li key={idx} style={{
+                                                        color: rule.valid ? '#4ade80' : '#ffa5a5',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        gap: '0.25rem',
+                                                        marginBottom: '0.125rem'
+                                                    }}>
+                                                        <span>{rule.valid ? '✓' : '•'}</span>
+                                                        {rule.label}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    }
                                 />
 
                                 {selectedRole === 'PATIENT' && (

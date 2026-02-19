@@ -48,7 +48,7 @@ export default function PatientDashboard() {
                 <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
                     <div>
                         <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Verify ASD Patient Portal</h1>
-                        <p style={{ color: '#666' }}>Secure Dashboard for {data.profile.name}</p>
+                        <p style={{ color: '#666' }}>Secure Dashboard for <strong>{data.profile.name}</strong></p>
                     </div>
                     <div style={{ textAlign: 'right' }}>
                         <div style={{ fontWeight: 'bold', color: 'var(--primary)' }}>ID: {data.profile.id}</div>
