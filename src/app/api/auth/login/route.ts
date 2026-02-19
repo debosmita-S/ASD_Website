@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
     } catch (error) {
         console.error("Login Error:", error);
         if (error instanceof z.ZodError) {
-            return NextResponse.json({ error: error.errors[0].message }, { status: 400 });
+            return NextResponse.json({ error: (error as any).errors[0].message }, { status: 400 });
         }
         return NextResponse.json({ error: "Authentication failed" }, { status: 500 });
     }

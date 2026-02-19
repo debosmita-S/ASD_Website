@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
     } catch (error) {
         console.error("Reset Password Error:", error);
         if (error instanceof z.ZodError) {
-            return NextResponse.json({ error: error.errors[0].message }, { status: 400 });
+            return NextResponse.json({ error: (error as any).errors[0].message }, { status: 400 });
         }
         return NextResponse.json({ error: "Failed to reset password" }, { status: 500 });
     }
